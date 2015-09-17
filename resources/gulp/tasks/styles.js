@@ -1,6 +1,9 @@
 'use strict';
 
-var gulp = require('gulp');
+var gulp = require('gulp'),
+    config = require('../config.js'),
+    sass = require('gulp-sass'),
+    autoprefixer = require('gulp-autoprefixer');
 
 gulp.task('styles', function ()
 {

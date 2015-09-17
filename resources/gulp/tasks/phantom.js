@@ -1,25 +1,28 @@
 'use strict';
 
-var gulp = require('gulp');
-
-// takes in a callback so the engine knows when it'll be done
-gulp.task('one', function(cb) {
-    // do stuff -- async or otherwise
-    cb(err); // if err is not null and not undefined, the run will stop, and note that it failed
-});
-
-// identifies a dependent task must be complete before this one begins
-gulp.task('two', ['one'], function() {
-    // task 'one' is done now
-});
+var gulp = require('gulp'),
+    config = require('../config.js'),
+    gulpif = require('gulp-if'),
+    uglify = require('gulp-uglify'),
+    concat = require('gulp-concat'),
+    jshint = require('gulp-jshint');
 
 
-// Scripts - concatenates the js together and minifies if in production
-gulp.task('phantom', function ()
+gulp.task('phantom-concat', function (cb)
 {
-    gulp.src(config.scripts.src)
-        .pipe(concat(config.scripts.targetName))
+    gulp.src(config.phantom.src)
+        .pipe(concat(config.phantom.targetName))
         .pipe(gulpif(config.isProd, uglify()))
-        .pipe(gulp.dest(config.scripts.dest))
+        .pipe(gulp.dest(config.phantom.dest));
+    cb();
 });
 
+
+gulp.task('phantom-lint', ['phantom-concat'], function()
+{
+    gulp.src(config.phantom.dest + '*.js')
+        .pipe(jshint())
+        .pipe(jshint.reporter('default'));
+});
+
+gulp.task('phantom', ['phantom-lint']);

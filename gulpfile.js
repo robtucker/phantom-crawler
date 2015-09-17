@@ -1,26 +1,18 @@
-'use strict';
-
 var gulp = require('gulp'),
-    sass = require('gulp-sass'),
-    autoprefixer = require('gulp-autoprefixer'),
-    gutil = require('gulp-util'),
-    gulpif = require('gulp-if'),
-    uglify = require('gulp-uglify'),
-    jshint = require('gulp-jshint'),
-    concat = require('gulp-concat'),
     clean = require('gulp-clean'),
-    wait = require('gulp-wait');
+    wait = require('gulp-wait'),
+    gutil = require('gulp-util');
 
-var config = require('./gulp/config.js');
+var config = require('./resources/gulp/config.js');
 
-require('./gulp/utils/logger.js');
+require('./resources/gulp/utils/logger.js');
 
 var fs = require('fs');
-var onlyScripts = require('./gulp/utils/scriptFilter');
-var tasks = fs.readdirSync('./gulp/tasks/').filter(onlyScripts);
+var onlyScripts = require('./resources/gulp/utils/scriptFilter');
+var tasks = fs.readdirSync('./resources/gulp/tasks/').filter(onlyScripts);
 
 tasks.forEach(function(task) {
-    require('./tasks/' + task);
+    require('./resources/gulp/tasks/' + task);
 });
 
 // init
@@ -34,4 +26,3 @@ gulp.task('watch', function()
 {
      gulp.watch(config.phantom.src, ['phantom', 'lint']);
 });
-

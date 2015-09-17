@@ -1,6 +1,7 @@
 'use strict';
 
-var gulp = require('gulp');
+var gulp = require('gulp'),
+    config = require('../config.js');
 
 gulp.task('providers', function ()
 {

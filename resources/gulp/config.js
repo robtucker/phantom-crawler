@@ -13,7 +13,7 @@ function GulpConfig () {
         return yamlConfig.env;
     };
     this.isProd = function() {
-        return this.env().indexOf('prod');
+        return 'dev';
     }
 
     this.src = 'phantom/';

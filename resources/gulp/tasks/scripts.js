@@ -1,6 +1,10 @@
 'use strict';
 
-var gulp = require('gulp');
+var gulp = require('gulp'),
+    config = require('../config.js'),
+    gulpif = require('gulp-if'),
+    uglify = require('gulp-uglify'),
+    concat = require('gulp-concat');
 
 gulp.task('scripts', function ()
 {
