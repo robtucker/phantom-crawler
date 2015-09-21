@@ -7,7 +7,9 @@ var gulp = require('gulp'),
 
 gulp.task('styles', function ()
 {
-    return gulp.src(config.styles.src)
+    var styles = config.styles;
+
+    return gulp.src(styles.src)
         .pipe(sass({
             sourceComments: config.isProd ? 'none' : 'map',
             sourceMap: 'sass',
@@ -15,5 +17,5 @@ gulp.task('styles', function ()
         }))
         .pipe(autoprefixer("last 2 versions", "> 1%", "ie 8"))
         .on('error', function(e) { console.log(e); })
-        .pipe(gulp.dest(config.styles.dest));
+        .pipe(gulp.dest(styles.dest));
 });

@@ -1,4 +1,5 @@
-function buildUrl (params) {
+function buildQuery (params) {
+    var parts = [];
     for (var i in params) {
         if (params.hasOwnProperty(i)) {
             parts.push(encodeURIComponent(i) + "=" + encodeURIComponent(params[i]));
@@ -7,15 +8,24 @@ function buildUrl (params) {
     return parts.join("&");
 }
 
-function getSearchUrl (start) {
-    var parts = ['https://www.google.com/search?'];
-    var params = {
-        as_sitesearch: 'https://hired.com/companies/',
-        start: start
-    };
-    return buildUrl(params);
+function buildUrl (base, params) {
+    var url = base.trim().replace('?', '');
+    if (params) {
+        url += '?' + buildQuery(params);
+    }
+    return url;
 }
 
-function getSearchResults (url) {
+function request (url, callback) {
 
+    var page = getPage();
+
+    page.open(url, function(status) {
+        strictLog("Status: " + status);
+        if(status !== "success") {
+            console.error('Url failed: ' + url.red);
+        }
+        callback();
+    });
 }
+

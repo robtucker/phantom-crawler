@@ -1,20 +1,12 @@
 'use strict';
 
-var yamlConfig = function () {
-    // Todo: parse yaml config file
-    return {
-        env: 'dev'
-    }
-};
-
 function GulpConfig () {
 
     this.env = function () {
-        return yamlConfig.env;
+        // Todo: parse yaml config file
+        return false;
     };
-    this.isProd = function() {
-        return 'dev';
-    }
+    this.isProd = this.env();
 
     this.src = 'phantom/';
     this.dest = 'public/'
@@ -25,6 +17,8 @@ function GulpConfig () {
             // PHANTOM - build order
             'phantom/config/*.js',
             'phantom/core/*.js',
+            'phantom/tasks/*.js',
+            'phantom/server.js'
         ],
         dest: '',
         targetName: 'phantom.js',

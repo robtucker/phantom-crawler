@@ -5,6 +5,6 @@ var strictLog = function(msg) {
 };
 
 var die = function(msg){
-    console.error(msg)
-    process.exit(1);
-}
+    console.error(msg);
+    phantom.exit();
+};

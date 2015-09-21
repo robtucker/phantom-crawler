@@ -6,7 +6,7 @@ var gulp = require('gulp'),
 
 gulp.task('lint', function()
 {
-    gulp.src(config.scripts.dest + '*.js')
+    gulp.src(config.phantom.src)
         .pipe(jshint())
         .pipe(jshint.reporter('default'));
 });

@@ -5,6 +5,7 @@
     "jquery": "^2.1.4"
   },
   "devDependencies": {
+    "colors": "^1.1.2",
     "gulp": "^3.8.11",
     "gulp-autoprefixer": "^2.3.0",
     "gulp-browserify": "^0.5.1",

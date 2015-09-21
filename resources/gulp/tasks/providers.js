@@ -1,18 +1,22 @@
 'use strict';
 
 var gulp = require('gulp'),
-    config = require('../config.js');
+    config = require('../config.js'),
+    gutil = require('gulp-util');
 
 gulp.task('providers', function ()
 {
-    //js providers
-    for (var i=0; i < config.providers.js.src.length; i++){
-        gulp.src(config.vendor + config.providers.js.src[i])
-            .pipe(gulp.dest(config.providers.js.dest));
+    var js = config.providers.js;
+    var css = config.providers.css;
+
+    for (var i = 0; i < js.src.length; i++) {
+        gulp.src(js.src[i])
+            .pipe(gulp.dest(js.dest));
+
     }
-    //css providers
-    for (var i=0; i < config.providers.css.src.length; i++){
-        gulp.src(config.vendor + config.providers.css.src[i])
-            .pipe(gulp.dest(config.providers.css.dest));
+
+    for (var i = 0; i < css.src.length; i++) {
+        gulp.src(css.src[i])
+            .pipe(gulp.dest(css.dest));
     }
 });

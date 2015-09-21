@@ -27,6 +27,4 @@ var getPage = function() {
         console.error(msgStack.join('\n'));
     };
     return page;
-}
-
-var page = getPage();
+};
