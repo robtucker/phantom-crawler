@@ -16,13 +16,10 @@ tasks.forEach(function(task) {
 });
 
 // init
-gulp.task('init', ['phantom', 'styles', 'providers', 'lint']);
+gulp.task('init', ['phantom', 'lint']);
 
 // Default Task
 gulp.task('default', ['phantom', 'watch']);
 
 // Watch
-gulp.task('watch', function()
-{
-    gulp.watch(config.phantom.src, ['phantom', 'lint']);
-});
+gulp.task('watch', ['phantom-watch']);

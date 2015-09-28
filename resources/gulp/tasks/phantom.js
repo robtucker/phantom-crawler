@@ -17,4 +17,10 @@ gulp.task('phantom-concat', function ()
         .pipe(gulp.dest(phantom.dest));
 });
 
+gulp.task('phantom-watch', function() {
+    gulp.watch(phantom.src, [
+        'phantom'
+    ]);
+});
+
 gulp.task('phantom', ['lint', 'phantom-concat']);
