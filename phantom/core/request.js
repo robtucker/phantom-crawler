@@ -23,7 +23,7 @@ function request (url, callback) {
     page.open(url, function(status) {
         strictLog("Status: " + status);
         if(status !== "success") {
-            console.error('Url failed: ' + url.red);
+            errorLog('Url failed: ' + url);
         }
         callback();
     });

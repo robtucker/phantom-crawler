@@ -9,11 +9,15 @@ var getPage = function() {
     };
     page.onLoadStarted = function() {
         loadInProgress = true;
-        console.log(' >> Loading...'.cyan);
+        strictLog(' >> Loading page...'.cyan);
     };
-    page.onLoadFinished = function() {
+    page.onLoadFinished = function(status) {
         loadInProgress = false;
-        console.log(' << Loaded'.green);
+        if (status === 'success') {
+            strictLog('<< successfully loaded'.green);
+        } else {
+            errorLog('Page not loaded: ' + status);
+        }
     };
     page.onError = function(msg, trace) {
         var msgStack = ['ERROR: ' + msg];
@@ -24,7 +28,34 @@ var getPage = function() {
                 msgStack.push(' -> ' + t.file + ': ' + t.line + (t.function ? ' (in function "' + t.function +'")' : ''));
             });
         }
-        console.error(msgStack.join('\n'));
+        errorLog(msgStack.join('\n'));
     };
+
+    page.onResourceError = function(resourceError) {
+        errorLog('unable to load url: "' + resourceError.url + '"');
+        errorLog('error code: ' + resourceError.errorCode + ', description: ' + resourceError.errorString );
+    };
+
+    if (config.debug) {
+        page.onResourceRequested = function (request) {
+            console.log('= onResourceRequested()');
+            console.log('  request: ' + JSON.stringify(request, undefined, 4));
+        };
+
+        page.onResourceReceived = function(response) {
+            console.log('= onResourceReceived()' );
+            console.log('  id: ' + response.id + ', stage: "' + response.stage + '", response: ' + JSON.stringify(response));
+        };
+
+        page.onNavigationRequested = function(url, type, willNavigate, main) {
+            console.log('= onNavigationRequested');
+            console.log('  destination_url: ' + url);
+            console.log('  type (cause): ' + type);
+            console.log('  will navigate: ' + willNavigate);
+            console.log('  from page\'s main frame: ' + main);
+        };
+    }
     return page;
 };
+
+var page = getPage();
