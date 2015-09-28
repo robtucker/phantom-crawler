@@ -16,7 +16,7 @@ tasks.forEach(function(task) {
 });
 
 // init
-gulp.task('init', ['phantom', 'lint']);
+gulp.task('init', ['init-config', 'phantom', 'lint']);
 
 // Default Task
 gulp.task('default', ['phantom', 'watch']);
