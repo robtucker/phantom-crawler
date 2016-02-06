@@ -1,28 +1,26 @@
-function Task (args) {
-    this.args = args;
-}
+function Task () {}
 
-Task.prototype.execute = function(args) {
-    errorLog('You must declare an execute function for this task: ' + task);
-    phantom.exit();
+Task.prototype.default = function() {
+    errorLog('You must declare an execute function for this task: ' + config.task);
+    die('Exiting without executing any task'.red);
 };
 
 Task.prototype.sequencer = function(steps, intervalCount){
     if (!intervalCount) {
-        intervalCount = 50;
+        intervalCount = 100;
     }
     var currentStep = 0;
 
     setInterval(function() {
         if (!loadInProgress && typeof steps[currentStep] == "function") {
             var stepLabel = ' [Step ' + (currentStep + 1) + '] @ ' + Date.now();
-            strictLog(stepLabel.magenta);
+            infoLog(stepLabel.magenta);
             var result  = steps[currentStep]();
             currentStep++;
         }
         if (typeof steps[currentStep] != "function") {
-            strictLog('  [✓] DONE'.green);
-            phantom.exit();
+            infoLog('  [✓] DONE'.green);
+            die('Exiting successfully. Script completed.'.green);
         }
     }, intervalCount);
 };

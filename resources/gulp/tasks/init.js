@@ -16,7 +16,5 @@ gulp.task('init-config', function ()
                 .pipe(gulp.dest('./'));
         }
     });
-
-
 });
 

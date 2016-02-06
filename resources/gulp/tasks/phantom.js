@@ -5,9 +5,12 @@ var gulp = require('gulp'),
     gulpif = require('gulp-if'),
     uglify = require('gulp-uglify'),
     concat = require('gulp-concat'),
-    jshint = require('gulp-jshint');
+    jshint = require('gulp-jshint'),
+    stylish = require('jshint-stylish');
+
 
 var phantom = config.phantom;
+var phantomSrc = phantom.src.concat(phantom.includes.src);
 
 gulp.task('phantom-concat', function ()
 {
@@ -17,10 +20,24 @@ gulp.task('phantom-concat', function ()
         .pipe(gulp.dest(phantom.dest));
 });
 
+gulp.task('phantom-includes', function(){
+    gulp.src(phantom.includes.src)
+        .pipe(concat(phantom.includes.targetName))
+        .pipe(gulp.dest(phantom.includes.dest));
+});
+
 gulp.task('phantom-watch', function() {
-    gulp.watch(phantom.src, [
+
+    gulp.watch(phantomSrc, [
         'phantom'
     ]);
 });
 
-gulp.task('phantom', ['lint', 'phantom-concat']);
+gulp.task('phantom-lint', function()
+{
+    gulp.src(phantomSrc)
+        .pipe(jshint())
+        .pipe(jshint.reporter(stylish));
+});
+
+gulp.task('phantom', ['phantom-lint', 'phantom-concat', 'phantom-includes']);
